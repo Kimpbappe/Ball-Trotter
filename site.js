@@ -1,5 +1,6 @@
 // ============ À MODIFIER : tes identifiants d’affiliation ============
 const AFF = {
+  omioId: "8070385",                   // ton numéro de compte Omio : il sert à fabriquer le lien de suivi, voir le message de Claude
   booking: "VOTRE_ID_BOOKING",         // paramètre aid de ton programme Booking.com
   gyg: "VOTRE_ID_GETYOURGUIDE",        // paramètre partner_id de GetYourGuide
   transport: "https://www.omio.fr/"    // remplace par ton lien profond Omio / Trainline (Awin)
@@ -9,8 +10,18 @@ const AFF = {
   let consent = null;
   try { consent = localStorage.getItem("bt-consent"); } catch (e) {}
   const ok = () => consent === "yes";
+  // Drapeaux : flag-icons (licence MIT, voir images/flags/LICENSE-flag-icons.txt)
+  const FL = { "Allemagne": ["de"], "Angleterre": ["gb-eng"], "Espagne": ["es"], "Italie": ["it"], "Serbie": ["rs"], "Belgique": ["be"],
+    "Écosse": ["gb-sct"], "France": ["fr"], "Pologne": ["pl"], "Danemark": ["dk"], "Suède": ["se"], "Danemark et Suède": ["dk", "se"], "Turquie": ["tr"],
+    "Argentine": ["ar"], "Brésil": ["br"], "Maroc": ["ma"], "Égypte": ["eg"], "Tunisie": ["tn"], "Algérie": ["dz"], "Corée du Sud": ["kr"], "Thaïlande": ["th"], "Europe": ["eu"] };
+  const flag = c => '<img class="flag" src="images/flags/' + c + '.svg" alt="" width="24" height="18" loading="lazy">';
   window.BT = {
-    hotels: v => "https://www.booking.com/searchresults.fr.html?ss=" + encodeURIComponent(v) + (ok() ? "&aid=" + encodeURIComponent(AFF.booking) : ""),
+    flag: flag,
+    flagsOf: name => (FL[name] || []).map(flag).join(""),
+    // o (facultatif) : { inDate: "AAAA-MM-JJ", outDate: "AAAA-MM-JJ", adults: 2, rooms: 1 } pour pré-remplir les dates sur Booking.com
+    hotels: (v, o) => "https://www.booking.com/searchresults.fr.html?ss=" + encodeURIComponent(v) +
+      (o && o.inDate && o.outDate ? "&checkin=" + o.inDate + "&checkout=" + o.outDate + "&group_adults=" + (o.adults || 2) + "&no_rooms=" + (o.rooms || 1) : "") +
+      (ok() ? "&aid=" + encodeURIComponent(AFF.booking) : ""),
     acts: v => "https://www.getyourguide.fr/s/?q=" + encodeURIComponent(v) + (ok() ? "&partner_id=" + encodeURIComponent(AFF.gyg) : ""),
     train: () => ok() ? AFF.transport : "https://www.omio.fr/"
   };

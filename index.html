@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr" class="f1">
+<html lang="fr" class="f4">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,7 +7,7 @@
 <meta name="description" content="Derbys bouillants, chocs mythiques, clubs cultes : des itinéraires pour voir du foot en Europe, en Amérique du Sud, en Afrique et en Asie, avec hôtels, transports et activités.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -16,11 +16,12 @@
 
 <header class="hero"><div class="wrap">
   <div class="top"><a class="brand" href="index.html"><img src="logo.svg" alt="" width="46" height="46"><span>Ball-Trotter</span></a>
-    <nav class="nav" aria-label="Navigation"><a href="index.html" aria-current="page">Itinéraires</a><a href="guide-billets.html">Guide des billets</a></nav></div>
+    <nav class="nav" aria-label="Navigation"><a href="#planificateur">Planifier</a><a href="index.html" aria-current="page">Itinéraires</a><a href="guide-billets.html">Guide des billets</a></nav></div>
   <div class="hero-grid">
     <div>
       <h1>Voir du foot dans le monde, étape par étape</h1>
       <p class="sub">Derbys bouillants, chocs mythiques, clubs cultes : où dormir, comment se déplacer et comment décrocher ta place.</p>
+      <a class="btn main hero-cta" href="#planificateur">Planifier mon déplacement</a>
     </div>
     <img class="hero-logo" src="logo.svg" alt="Logo Ball-Trotter : deux supporters qui font le tour d’un globe, avec un ballon à côté">
   </div>
@@ -28,6 +29,62 @@
 </div></header>
 
 <main class="wrap">
+  <section class="planner" id="planificateur" aria-labelledby="pl-titre">
+    <h2 class="section" id="pl-titre">Planifie ton déplacement</h2>
+    <p class="lead">Choisis tes dates, ta ville de départ et ton budget. Le site retient les matchs repérés dans ta période, puis estime le coût total par personne : transport, hôtel et billet.</p>
+    <noscript><p class="warn">Le planificateur a besoin de JavaScript. Les itinéraires restent consultables plus bas.</p></noscript>
+    <div class="pl-grid">
+      <div class="pl-panel pl-when">
+        <h3 class="pl-h"><span class="pl-n">1</span>Quand pars-tu ?</h3>
+        <div class="chips" id="pl-months" role="group" aria-label="Choisir un mois entier"></div>
+        <div id="pl-cal" class="cal"></div>
+        <ul class="cal-legend"><li><i class="lg ok"></i>Match confirmé</li><li><i class="lg win"></i>Week-end ou date à confirmer</li></ul>
+        <p class="pl-range" id="pl-range"></p>
+      </div>
+      <div class="pl-panel pl-set">
+        <h3 class="pl-h"><span class="pl-n">2</span>D’où pars-tu ?</h3>
+        <div class="pl-row">
+          <label>Ville de départ<select id="pl-origin"></select></label>
+          <label>Voyageurs<select id="pl-pax"><option value="1">1 personne</option><option value="2">2 personnes</option><option value="3">3 personnes</option><option value="4">4 personnes</option><option value="5">5 personnes</option><option value="6">6 personnes</option></select></label>
+        </div>
+        <fieldset class="seg-f"><legend>Transport</legend>
+          <div class="seg" id="pl-mode" role="group" aria-label="Type de transport"><button type="button" data-v="cheap">Le moins cher</button><button type="button" data-v="train">Train</button><button type="button" data-v="air">Avion</button></div>
+        </fieldset>
+        <h3 class="pl-h"><span class="pl-n">3</span>Quel budget ?</h3>
+        <div class="knob-wrap">
+          <button type="button" class="k-step" id="kb-minus" aria-label="Baisser le budget">−</button>
+          <div id="knob" class="knob" role="slider" tabindex="0" aria-label="Budget par personne"></div>
+          <button type="button" class="k-step" id="kb-plus" aria-label="Augmenter le budget">+</button>
+        </div>
+        <p class="k-help">Tourne la molette à la souris, au doigt ou avec les flèches du clavier. Le budget compte le transport, l’hôtel et le billet.</p>
+        <fieldset class="seg-f"><legend>Hôtel</legend>
+          <div class="seg" id="pl-hotel" role="group" aria-label="Catégorie d’hôtel"><button type="button" data-v="eco">Économique</button><button type="button" data-v="mid">Standard</button><button type="button" data-v="conf">Confort</button></div>
+        </fieldset>
+        <label class="chk"><input type="checkbox" id="pl-meals"> Ajouter les repas et les transports sur place</label>
+      </div>
+    </div>
+    <div class="pl-resbar"><p class="sr" id="pl-status" aria-live="polite"></p>
+      <div class="sort" id="pl-sort" role="group" aria-label="Trier les résultats"><span>Trier par</span><button type="button" data-v="date" aria-pressed="true">Date</button><button type="button" data-v="price" aria-pressed="false">Prix</button></div></div>
+    <div id="pl-results"></div>
+    <details class="method"><summary>Comment c’est calculé ?</summary>
+      <div class="in">
+        <h4>Dates des matchs</h4>
+        <p>Elles viennent des calendriers publiés par les ligues et les clubs, relevés le 29 octobre 2026. « Date confirmée » : le jour est fixé. « Week-end confirmé » : la ligue a fixé le week-end mais pas encore le jour. « Date approximative » : je connais la journée de championnat, pas la date exacte. Un match peut être déplacé pour la télévision ou les coupes : vérifie avant de réserver.</p>
+        <h4>Vols</h4>
+        <p>Prix moyen d’un aller-retour par personne, calculé par Où et Quand sur des prix relevés les années précédentes, au départ de Paris, Lyon, Marseille, Nice, Toulouse, Bordeaux et Nantes. Quand le relevé manque, la ligne porte la mention « estimation » : le prix est alors déduit de celui de Paris. C’est toujours le cas pour Lille et Strasbourg. La fourchette va de 65 % à 160 % de la moyenne.</p>
+        <h4>Trains</h4>
+        <p>Estimations pour les liaisons directes courantes. Les bus ne sont pas comptés : cherche-les sur Omio avec le bouton « Trains, bus et vols ».</p>
+        <h4>Hôtels</h4>
+        <p>Prix moyen d’une chambre double de catégorie moyenne, partagée entre les voyageurs, hors soirs de gros matchs qui font monter les prix. C’est une estimation : le bouton « Hôtels pour ces dates » ouvre Booking.com avec tes dates.</p>
+        <h4>Billets</h4>
+        <p>Fourchettes publiées pour le Clásico, l’Old Firm, les matchs du Bayern, Liverpool et le derby de Belgrade. Les autres billets sont des estimations. Les gros matchs sont souvent réservés aux membres et se retrouvent en revente, plus cher que le prix officiel.</p>
+        <h4>Ce qui n’est pas compté</h4>
+        <p>L’assurance, les bagages en soute, les transferts depuis l’aéroport, les activités, ainsi que les formalités d’entrée de chaque pays (voir les fiches).</p>
+        <p class="src">Sources : <a href="https://www.ou-et-quand.net/vols/" target="_blank" rel="noopener">Où et Quand (prix des vols)</a> · <a href="https://www.goal.com/en/news/barcelona-real-madrid-tickets/blt047a97e946b61150" target="_blank" rel="noopener">Goal : billets du Clásico</a> · <a href="https://www.goal.com/en/news/celtic-vs-rangers-tickets/blt130a069d215dceba" target="_blank" rel="noopener">Goal : billets de l’Old Firm</a> · <a href="https://www.basket-mag.com/de/ticketpreis-bayern-muenchen/" target="_blank" rel="noopener">Basket Mag : billets du Bayern</a> · <a href="https://www.basket-mag.com/us/liverpool-tickets-prices-fixtures/" target="_blank" rel="noopener">Basket Mag : billets de Liverpool</a> · <a href="https://www.si.com/soccer/liverpool-2026-27-premier-league-fixtures-derby-dates-full-schedule" target="_blank" rel="noopener">Calendrier de Liverpool</a> · <a href="https://www.si.com/soccer/man-utd-2026-27-premier-league-fixtures-dates-full-schedule" target="_blank" rel="noopener">Calendrier de Manchester United</a> · <a href="https://www.realmadrid.com/es-ES/noticias/futbol/primer-equipo/actualidad/el-calendario-del-real-madrid-para-la-liga-2026-27-30-06-2026" target="_blank" rel="noopener">Calendrier du Real Madrid</a> · <a href="https://www.bundesliga.com/de/bundesliga/spieltag/2026-2027/1-fc-union-berlin" target="_blank" rel="noopener">Calendrier de l’Union Berlin</a> · <a href="https://www.bundesliga.com/de/2bundesliga/spieltag/2026-2027/fc-st-pauli" target="_blank" rel="noopener">Calendrier du FC St. Pauli</a> · <a href="https://www.vavel.com/en/data/union-saint-gilloise/fixtures/" target="_blank" rel="noopener">Calendrier de l’Union Saint-Gilloise</a></p>
+      </div>
+    </details>
+  </section>
+
   <h2 class="section" id="itineraires">Nos itinéraires</h2>
   <p class="lead">Les parcours sont classés par continent, puis par type de match. Les derbys dépendent des divisions de chaque saison : vérifie toujours le calendrier officiel. Quand je l’ai vérifié, les cartes indiquent aussi les formalités d’entrée et les conseils de sécurité du site officiel France Diplomatie (relevés en septembre et octobre 2026) : ils changent, vérifie-les avant de partir. Pour les billets, consulte notre <a href="guide-billets.html">guide des billets</a>.</p>
   <nav class="catnav" id="catnav" aria-label="Catégories"></nav>
@@ -64,16 +121,17 @@
 </section>
 
 <script src="site.js"></script>
+<script src="planner-data.js"></script>
 <script>
 /* Pour ajouter une photo : dépose images/<slug>.jpg dans le dossier du site.
    Pour créditer l’auteur sur la carte, ajoute un champ credit:"Auteur, licence" au parcours.
    Pour ajouter un continent : ajoute-le dans `continents`, puis mets continent:"id" dans les parcours. */
 
 const continents = [
-  { id:"europe", name:"Europe" },
-  { id:"amerique-du-sud", name:"Amérique du Sud" },
-  { id:"afrique", name:"Afrique" },
-  { id:"asie", name:"Asie" }
+  { id:"europe", name:"Europe", icon:"eu" },
+  { id:"amerique-du-sud", name:"Amérique du Sud", icon:"💃" },
+  { id:"afrique", name:"Afrique", icon:"🦁" },
+  { id:"asie", name:"Asie", icon:"🏮" }
 ];
 
 const cats = [
@@ -293,10 +351,15 @@ const trips = [
    tip:"La saison 2025-2026 s’est jouée du 15 août 2025 au 10 mai 2026 : vérifie le calendrier de la saison visée. Les visites du stade de Buriram sont possibles les jours sans match.",
    src:[["Wikipédia : Thai League 1 2025-2026","https://en.wikipedia.org/wiki/2025%E2%80%9326_Thai_League_1"],["Chang Arena : guide","https://www.thaiholidayguide.com/attraction/chang-arena-stadium/"],["France Diplomatie : entrée","https://www.diplomatie.gouv.fr/fr/information-par-pays/thailande/conseils-aux-voyageurs-entree-sejour"]] }
 ];
+window.BTtrips = trips;
 
+function contIcon(c) {
+  return c.icon === "eu" ? '<img class="cont-eu" src="images/flags/eu.svg" alt="" width="44" height="33">' : '<span class="cont-emo" aria-hidden="true">' + c.icon + '</span>';
+}
 function card(t) {
-  return '<article class="ticket"><div class="ph"><img src="images/' + t.slug + '.jpg" alt="Photo : ' + t.title + '" loading="lazy" onerror="this.remove()">' +
-    '<b>' + t.city + '</b>' + ((t.credit || credits[t.slug]) ? '<span class="credit">' + (t.credit || credits[t.slug]) + '</span>' : '') + '</div>' +
+  const country = t.meta.split(" · ")[1] || "";
+  return '<article class="ticket" id="trip-' + t.slug + '"><div class="ph"><img src="images/' + t.slug + '.jpg" alt="Photo : ' + t.title + '" loading="lazy" onerror="this.remove()">' +
+    '<b>' + t.city + '</b><span class="ph-flags" title="' + country + '">' + BT.flagsOf(country) + '</span>' + ((t.credit || credits[t.slug]) ? '<span class="credit">' + (t.credit || credits[t.slug]) + '</span>' : '') + '</div>' +
     '<div class="ticket-top"><h3>' + t.title + '</h3><div class="meta">' + t.meta + '</div></div>' +
     '<div class="ticket-body"><ol>' + t.steps.map(s => "<li>" + s + "</li>").join("") + '</ol><p class="fact"><strong>Le saviez-vous ?</strong> ' + t.fact + '</p>' +
     (t.dates ? '<p class="dates"><strong>Calendrier 2026-27 :</strong> ' + t.dates + '</p>' : '') +
@@ -313,8 +376,8 @@ function render() {
   continents.forEach(c => {
     const inC = trips.filter(t => t.continent === c.id);
     if (!inC.length) return;
-    nav += '<a href="#' + c.id + '">' + c.name + '</a>';
-    html += '<h2 class="cont" id="' + c.id + '">' + c.name + '</h2>';
+    nav += '<a href="#' + c.id + '">' + contIcon(c) + c.name + '</a>';
+    html += '<h2 class="cont" id="' + c.id + '">' + contIcon(c) + c.name + '</h2>';
     cats.forEach(k => {
       const list = inC.filter(t => t.cat === k.id);
       if (!list.length) return;
@@ -328,5 +391,6 @@ function render() {
 document.addEventListener("bt-consent", render);
 render();
 </script>
+<script src="planner.js"></script>
 </body>
 </html>
