@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ball-Trotter – Itinéraires pour voir du foot en Europe</title>
-<meta name="description" content="Week-ends et séries de matchs en Europe : derbys mythiques, clubs méconnus, hôtels, transports et activités autour du stade.">
+<meta name="description" content="Derbys bouillants, chocs mythiques, clubs cultes : des itinéraires pour voir du foot en Europe, avec hôtels, transports et activités.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -17,14 +17,15 @@
   <div class="top"><a class="brand" href="index.html">Ball-Trotter</a>
     <nav class="nav" aria-label="Navigation"><a href="index.html" aria-current="page">Itinéraires</a><a href="guide-billets.html">Guide des billets</a></nav></div>
   <h1>Voir du foot en Europe, étape par étape</h1>
-  <p>Derbys mythiques, clubs méconnus, week-ends et séries de matchs : où dormir, comment se déplacer, et comment décrocher ta place.</p>
-  <div class="route" aria-hidden="true"><span class="stop on">Belgrade</span><span class="leg"></span><span class="stop">Londres</span><span class="leg"></span><span class="stop">Cologne</span></div>
+  <p>Derbys bouillants, chocs mythiques, clubs cultes : où dormir, comment se déplacer, et comment décrocher ta place.</p>
+  <div class="route" aria-hidden="true"><span class="stop on">Belgrade</span><span class="leg"></span><span class="stop">Glasgow</span><span class="leg"></span><span class="stop">Istanbul</span></div>
 </div></header>
 
 <main class="wrap">
   <h2 class="section" id="itineraires">Nos itinéraires</h2>
-  <p class="lead">Chaque parcours regroupe plusieurs stades ou matchs dans un même voyage. Les derbys dépendent des divisions de chaque saison : vérifie toujours le calendrier officiel. Pour les billets, consulte notre <a href="guide-billets.html">guide des billets</a>.</p>
-  <div class="grid" id="grid"></div>
+  <p class="lead">Les parcours sont classés par continent, puis par type de match. Les derbys dépendent des divisions de chaque saison : vérifie toujours le calendrier officiel. Pour les billets, consulte notre <a href="guide-billets.html">guide des billets</a>.</p>
+  <nav class="catnav" id="catnav" aria-label="Catégories"></nav>
+  <div id="content"></div>
 
   <h2 class="section" id="conseils">Avant de partir</h2>
   <div class="tips">
@@ -40,11 +41,11 @@
   <h2>Mentions légales</h2>
   <p>Les champs surlignés sont à compléter avec tes informations réelles avant la mise en ligne.</p>
   <h3>Éditeur du site</h3>
-  <p><span class="todo">[Nom et prénom ou raison sociale]</span>, <span class="todo">[statut : ex. micro-entrepreneur]</span>, SIRET <span class="todo">[numéro]</span>, <span class="todo">[adresse postale]</span>. Contact : <span class="todo">[adresse e-mail]</span>.</p>
+  <p>Ball-Trotter, micro-entreprise de Emilio-Gabriel Leclere, statut : micro-entrepreneur, SIRET <span class="todo">[numéro]</span>, <span class="todo">[adresse professionnelle]</span>. Contact : <a href="mailto:balltrottercontact@gmail.com">balltrottercontact@gmail.com</a>.</p>
   <h3>Directeur de la publication</h3>
-  <p><span class="todo">[Nom du directeur de la publication]</span></p>
+  <p>Emilio-Gabriel Leclere</p>
   <h3>Hébergeur</h3>
-  <p><span class="todo">[Nom de l’hébergeur, adresse, téléphone]</span></p>
+  <p>GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p>
   <h3>Affiliation</h3>
   <p>Ball-Trotter participe à des programmes d’affiliation (notamment Booking.com, GetYourGuide et Omio, via leurs réseaux). Lorsque tu réserves via un lien identifié, l’éditeur peut percevoir une commission, sans surcoût pour toi.</p>
   <h3>Propriété intellectuelle et responsabilité</h3>
@@ -53,60 +54,131 @@
   <h2 id="confidentialite">Confidentialité et cookies</h2>
   <p>Ce site ne collecte pas de données personnelles et n’utilise ni mesure d’audience ni publicité. Le seul élément enregistré dans ton navigateur est ton choix de cookies, nécessaire au fonctionnement du bandeau.</p>
   <p>Les liens partenaires mènent vers des sites tiers qui déposent leurs propres cookies selon leur politique. Si tu acceptes, nos liens contiennent notre identifiant d’affiliation, ce qui permet de rattacher ta réservation à Ball-Trotter. Si tu refuses, les liens pointent vers le site du partenaire sans identifiant.</p>
-  <p>Tu peux modifier ton choix à tout moment avec « Gérer mes cookies ». Pour exercer tes droits ou poser une question : <span class="todo">[adresse e-mail]</span>. Tu peux aussi saisir la CNIL (cnil.fr).</p>
+  <p>Tu peux modifier ton choix à tout moment avec « Gérer mes cookies ». Pour exercer tes droits ou poser une question : <a href="mailto:balltrottercontact@gmail.com">balltrottercontact@gmail.com</a>. Tu peux aussi saisir la CNIL (cnil.fr).</p>
 </section>
 
 <script src="site.js"></script>
 <script>
-// Pour ajouter une photo : dépose images/<slug>.jpg dans le dossier du site (image libre de droits ou la tienne).
+/* Pour ajouter une photo : dépose images/<slug>.jpg dans le dossier du site.
+   Pour créditer l’auteur sur la carte, ajoute un champ credit:"Auteur, licence" au parcours.
+   Pour ajouter un continent : ajoute-le dans `continents`, puis mets continent:"id" dans les parcours. */
+
+const continents = [
+  { id:"europe", name:"Europe" }
+  // exemple pour plus tard : { id:"amerique-du-sud", name:"Amérique du Sud" }
+];
+
+const cats = [
+  { id:"derbys", name:"Derbys bouillants", intro:"Rivalités locales et ambiance maximale. Les places sont rares : prépare-toi tôt." },
+  { id:"mythiques", name:"Clubs et chocs mythiques", intro:"Les affiches et les stades dont tout le monde a entendu parler." },
+  { id:"cultes", name:"Clubs cultes et hors des sentiers battus", intro:"Moins de touristes, plus d’identité : des clubs à découvrir." },
+  { id:"weekends", name:"Week-ends multi-stades", intro:"Plusieurs stades ou matchs dans un même séjour." }
+];
+
 const trips = [
- { slug:"belgrade", tag:"Derby mythique", title:"L’Éternel derby de Belgrade", meta:"3 jours · Serbie · Partizan – Étoile Rouge", city:"Belgrade", acts:"Belgrade stade",
+ /* ---------- DERBYS BOUILLANTS ---------- */
+ { continent:"europe", cat:"derbys", slug:"belgrade", title:"L’Éternel derby de Belgrade", meta:"3 jours · Serbie · Partizan – Étoile Rouge", city:"Belgrade", acts:"Belgrade stade",
    steps:["Stade Rajko Mitić, dit « Marakana » : le stade de l’Étoile Rouge.","Stade du Partizan : l’autre moitié du derby, à quelques kilomètres.","Centre de Belgrade et forteresse de Kalemegdan avant ou après le match."],
    fact:"L’Étoile Rouge a remporté la Coupe d’Europe des clubs champions en 1991, et son stade doit son surnom au célèbre Maracanã de Rio.",
    tip:"Les billets sont rares et l’ambiance très intense : anticipe la billetterie et les consignes de sécurité." },
- { slug:"londres-millwall-west-ham", tag:"Derby mythique", title:"Millwall – West Ham", meta:"3 jours · Angleterre · Derby des Docks", city:"Londres", acts:"Londres football",
+ { continent:"europe", cat:"derbys", slug:"londres-millwall-west-ham", title:"Millwall – West Ham", meta:"3 jours · Angleterre · Derby des Docks", city:"Londres", acts:"Londres football",
    steps:["The Den (Millwall), dans le sud-est de Londres, réputé pour son ambiance.","London Stadium (West Ham), à Stratford, installé dans l’ancien stade olympique de 2012.","Pubs de Bermondsey ou de Stratford pour les repas d’avant-match."],
    fact:"Millwall est né en 1885 parmi les ouvriers d’une fabrique de confitures, West Ham sous le nom de Thames Ironworks : le derby oppose deux clubs d’ouvriers des docks. Le chant « No one likes us, we don’t care » est l’hymne de Millwall.",
    tip:"Les deux clubs ne se rencontrent que dans la même division. Sinon, vise un autre match de l’un des deux. La billetterie demande parfois une inscription préalable." },
- { slug:"cologne-gladbach", tag:"Derby mythique", title:"Derby rhénan : Cologne – Gladbach", meta:"3 jours · Allemagne · Rhin", city:"Cologne", acts:"Cologne stade",
+ { continent:"europe", cat:"derbys", slug:"cologne-gladbach", title:"Derby rhénan : Cologne – Gladbach", meta:"3 jours · Allemagne · Rhin", city:"Cologne", acts:"Cologne stade",
    steps:["RheinEnergieStadion à Cologne, au cœur de la ville du Dom.","Borussia-Park à Mönchengladbach, à environ 1 h en train.","Soirée dans les brasseries de la vieille ville, avec la bière locale, la Kölsch."],
    fact:"À Cologne, la mascotte du club est un vrai bouc prénommé Hennes, présent les jours de match à domicile.",
    tip:"Selon les saisons, le derby du Rhin peut aussi opposer Cologne à Düsseldorf. Vérifie le calendrier." },
- { slug:"belgique", tag:"Hors des sentiers battus", title:"Belgique méconnue", meta:"3 à 4 jours · Belgique · 3 clubs", city:"Bruxelles", acts:"Bruxelles",
+ { continent:"europe", cat:"derbys", slug:"lyon-saint-etienne", title:"Derby du Rhône : Lyon – Saint-Étienne", meta:"3 jours · France · OL – ASSE", city:"Lyon", acts:"Lyon",
+   steps:["Saint-Étienne : stade Geoffroy-Guichard, surnommé « le Chaudron », dans une ancienne ville minière.","Train Saint-Étienne – Lyon, environ 1 h.","Lyon : Groupama Stadium, à Décines, à l’est de l’agglomération et desservi par le tram.","Vieux-Lyon et ses traboules, puis un bouchon lyonnais pour la soirée."],
+   fact:"L’AS Saint-Étienne est née en 1919 au sein de l’entreprise Casino, et son stade porte le nom du fondateur de l’enseigne, Geoffroy Guichard.",
+   tip:"Le derby n’a lieu que si les deux clubs sont dans la même division. Sinon, vois un match de chaque club : les deux villes sont très proches." },
+ { continent:"europe", cat:"derbys", slug:"pologne", title:"Derbys polonais : Cracovie et Silésie", meta:"4 jours · Pologne · Wisła – Cracovia, Górnik – Ruch", city:"Cracovie", acts:"Cracovie",
+   steps:["Cracovie : Wisła et Cracovia se disputent la « Guerre sainte » (Święta Wojna), l’un des derbys les plus chauds du pays.","Silésie : Górnik Zabrze et Ruch Chorzów, autres rivaux historiques, à environ 1 h 30 de Cracovie.","Vieille ville de Cracovie et quartier de Kazimierz pour les soirées."],
+   fact:"Cracovia, fondé en 1906, est l’un des plus anciens clubs de Pologne.",
+   tip:"Les tribunes polonaises sont réputées pour leur ferveur. Les billets s’achètent sur les sites officiels des clubs, parfois avec une identification obligatoire. Vérifie la division de chaque club." },
+ { continent:"europe", cat:"derbys", slug:"rome", title:"Derby de la Capitale : Roma – Lazio", meta:"3 jours · Italie · Stadio Olimpico", city:"Rome", acts:"Rome Stadio Olimpico",
+   steps:["Stadio Olimpico : le stade partagé par la Roma et la Lazio, dans le nord de Rome.","Les deux virages se font face : la Curva Sud pour la Roma, la Curva Nord pour la Lazio.","Centre historique et Trastevere pour la soirée."],
+   fact:"La Lazio a été fondée en 1900 et la Roma en 1927. Le même stade a accueilli les Jeux olympiques de 1960 et la finale du Mondial 1990.",
+   tip:"Les billets sont nominatifs et une carte de fidélité du club peut être demandée. Prépare ton compte à l’avance." },
+ { continent:"europe", cat:"derbys", slug:"istanbul", title:"Derby des deux continents : Istanbul", meta:"3 jours · Turquie · Galatasaray – Fenerbahçe", city:"Istanbul", acts:"Istanbul",
+   steps:["Fenerbahçe : stade Şükrü Saracoğlu, à Kadıköy, sur la rive asiatique.","Galatasaray : stade de Seyrantepe (Rams Park), sur la rive européenne.","Traversée du Bosphore en ferry entre les deux rives."],
+   fact:"Le derby d’Istanbul s’appelle « le derby des deux continents » : l’un des stades est en Europe, l’autre en Asie.",
+   tip:"L’ambiance est électrique. Les places pour les supporters visiteurs sont parfois limitées ou interdites : renseigne-toi avant de réserver." },
+ { continent:"europe", cat:"derbys", slug:"glasgow", title:"L’Old Firm : Celtic – Rangers", meta:"3 jours · Écosse · Glasgow", city:"Glasgow", acts:"Glasgow",
+   steps:["Celtic Park, dans l’est de Glasgow, surnommé « Paradise ».","Ibrox, le stade des Rangers, dans le sud-ouest de la ville.","Centre de Glasgow et musée Kelvingrove pour compléter le séjour."],
+   fact:"Le Celtic a été fondé en 1887 par un religieux, le frère Walfrid, pour financer des repas destinés aux pauvres de l’est de Glasgow.",
+   tip:"Les billets de l’Old Firm sont très demandés et souvent réservés aux abonnés. Si c’est complet, vois un autre match de l’un des deux clubs." },
+
+ /* ---------- CLUBS ET CHOCS MYTHIQUES ---------- */
+ { continent:"europe", cat:"mythiques", slug:"el-clasico", title:"El Clásico : Barcelone et Madrid", meta:"4 jours · Espagne · Barça – Real", city:"Barcelone", acts:"Barcelone Camp Nou",
+   steps:["Barcelone : Camp Nou, le stade du FC Barcelone. Vérifie son état d’ouverture et les tribunes accessibles.","Train à grande vitesse Barcelone – Madrid, environ 2 h 30 à 3 h.","Madrid : Santiago Bernabéu, le stade du Real, avec visite du musée."],
+   fact:"La devise du Barça, « Més que un club » (plus qu’un club), exprime le rôle du club dans l’identité catalane.",
+   tip:"El Clásico se joue deux fois par saison, une fois dans chaque ville. Sinon, vois un match de chaque club à quelques jours d’écart." },
+ { continent:"europe", cat:"mythiques", slug:"liverpool-manchester", title:"Liverpool et Manchester", meta:"3 jours · Angleterre · Anfield, Old Trafford", city:"Liverpool", acts:"Liverpool Anfield",
+   steps:["Liverpool : Anfield et sa tribune Kop, où résonne « You’ll Never Walk Alone ».","Train Liverpool – Manchester, environ 1 h.","Manchester : Old Trafford (Manchester United), ou l’Etihad Stadium de Manchester City."],
+   fact:"Old Trafford est surnommé « le Théâtre des rêves », un surnom attribué à Bobby Charlton. Liverpool et Manchester United comptent parmi les clubs les plus titrés d’Angleterre.",
+   tip:"Les billets se vendent surtout aux membres et aux abonnés. Prévois plusieurs plans selon la disponibilité, y compris les visites de stade." },
+ { continent:"europe", cat:"mythiques", slug:"bayern-dortmund", title:"Der Klassiker : Munich et Dortmund", meta:"4 jours · Allemagne · Bayern – Dortmund", city:"Munich", acts:"Munich Allianz Arena",
+   steps:["Munich : Allianz Arena, dont la façade s’illumine en rouge pour le Bayern.","Train Munich – Dortmund, environ 5 à 6 h : prévois une journée de trajet ou un vol.","Dortmund : Signal Iduna Park et son mur jaune."],
+   fact:"Les deux stades font partie des plus connus d’Europe : l’un pour sa façade lumineuse, l’autre pour sa tribune debout.",
+   tip:"Le choc entre les deux clubs ne se joue que quelques fois par an. Sinon, vois un match de chacun à quelques jours d’écart." },
+ { continent:"europe", cat:"mythiques", slug:"milan-turin", title:"Milan et Turin", meta:"4 jours · Italie · 2 matchs", city:"Milan", acts:"Milan San Siro",
+   steps:["Milan : San Siro, partagé par l’AC Milan et l’Inter.","Train rapide Milan – Turin, environ 1 h à 1 h 30 selon le service.","Turin : Allianz Stadium (Juventus) et musée du club."],
+   fact:"San Siro porte officiellement le nom de Giuseppe Meazza, ancien joueur des deux clubs milanais.",
+   tip:"La Serie A étale ses matchs sur plusieurs jours : choisis tes dates une fois le calendrier publié." },
+
+ /* ---------- CLUBS CULTES ---------- */
+ { continent:"europe", cat:"cultes", slug:"belgique", title:"Belgique méconnue", meta:"3 à 4 jours · Belgique · 3 clubs", city:"Bruxelles", acts:"Bruxelles",
    steps:["Bruxelles : stade Joseph Marien, repaire de l’Union Saint-Gilloise.","Anvers : Bosuilstadion, le stade du Royal Antwerp, l’un des plus anciens clubs du pays.","Gand : le stade de La Gantoise, ville étudiante facile à explorer."],
    fact:"L’Union Saint-Gilloise, fondée en 1897, a enchaîné 60 matchs sans défaite dans les années 1930, un record du football belge, avant de revenir au premier plan ces dernières années.",
    tip:"Les trois villes sont reliées en moins d’une heure en train : une seule base d’hébergement suffit." },
- { slug:"st-pauli-union-berlin", tag:"Hors des sentiers battus", title:"Clubs cultes : St. Pauli et Union Berlin", meta:"4 jours · Allemagne · 2 matchs", city:"Hambourg", acts:"Hambourg",
+ { continent:"europe", cat:"cultes", slug:"st-pauli-union-berlin", title:"Clubs cultes : St. Pauli et Union Berlin", meta:"4 jours · Allemagne · 2 matchs", city:"Hambourg", acts:"Hambourg",
    steps:["Hambourg : Millerntor-Stadion du FC St. Pauli, à deux pas de la Reeperbahn.","Train Hambourg – Berlin, environ 2 h.","Berlin : Stadion An der Alten Försterei, le stade de l’Union, en lisière de forêt."],
    fact:"À l’Union Berlin, des supporters ont retapé eux-mêmes leur stade en 2008-2009, et le club réunit chaque Noël ses fans pour une soirée de chants dans les tribunes.",
    tip:"Deux clubs à forte identité, souvent complets : prends ta billetterie dès l’ouverture des ventes." },
- { slug:"dundee", tag:"Hors des sentiers battus", title:"Derby de Dundee", meta:"2 jours · Écosse · Dundee – Dundee United", city:"Dundee", acts:"Dundee",
+ { continent:"europe", cat:"cultes", slug:"dundee", title:"Derby de Dundee", meta:"2 jours · Écosse · Dundee – Dundee United", city:"Dundee", acts:"Dundee",
    steps:["Dens Park (Dundee FC) et Tannadice (Dundee United) : deux stades à quelques minutes à pied l’un de l’autre.","Front de mer et musée V&A Dundee.","Accès depuis Édimbourg en train, environ 1 h 15."],
    fact:"Dens Park et Tannadice comptent parmi les stades professionnels les plus proches de Grande-Bretagne, séparés par quelques centaines de mètres.",
    tip:"Le derby n’a lieu que si les deux clubs sont dans la même division. Sinon, vois un match de l’un d’eux." },
- { slug:"ruhr", tag:"Classique", title:"Week-end Ruhr", meta:"3 jours · Allemagne · 2 à 3 matchs", city:"Dortmund", acts:"Dortmund stade",
+
+ /* ---------- WEEK-ENDS MULTI-STADES ---------- */
+ { continent:"europe", cat:"weekends", slug:"ruhr", title:"Week-end Ruhr", meta:"3 jours · Allemagne · 2 à 3 matchs", city:"Dortmund", acts:"Dortmund stade",
    steps:["Dortmund : Signal Iduna Park et son mur jaune.","Gelsenkirchen : Veltins-Arena (Schalke 04), à environ 30 minutes en train.","Cologne : RheinEnergieStadion et centre historique en soirée."],
    fact:"Le « Mur jaune » de Dortmund accueille environ 25 000 supporters debout, la plus grande tribune debout d’Europe.",
    tip:"Ces villes sont reliées en train régional : base-toi sur une seule pour dormir." },
- { slug:"madrid", tag:"Classique", title:"Madrid, deux stades", meta:"3 jours · Espagne · 1 à 2 matchs", city:"Madrid", acts:"Madrid Bernabéu",
+ { continent:"europe", cat:"weekends", slug:"madrid", title:"Madrid, deux stades", meta:"3 jours · Espagne · 1 à 2 matchs", city:"Madrid", acts:"Madrid Bernabéu",
    steps:["Santiago Bernabéu : visite du stade et du musée du Real Madrid.","Riyadh Air Metropolitano : le stade de l’Atlético, desservi par le métro.","Quartiers de Malasaña ou La Latina pour les repas d’avant-match."],
    fact:"Le Bernabéu a accueilli la finale de la Coupe du monde 1982 et possède désormais un toit rétractable.",
-   tip:"Les matchs de Liga se jouent souvent tard le soir : prévois le retour en métro ou en taxi." },
- { slug:"milan-turin", tag:"Classique", title:"Milan et Turin", meta:"4 jours · Italie · 2 matchs", city:"Milan", acts:"Milan San Siro",
-   steps:["Milan : San Siro, partagé par l’AC Milan et l’Inter.","Train rapide Milan – Turin, environ 1 h à 1 h 30 selon le service.","Turin : Allianz Stadium (Juventus) et musée du club."],
-   fact:"San Siro porte officiellement le nom de Giuseppe Meazza, ancien joueur des deux clubs milanais.",
-   tip:"La Serie A étale ses matchs sur plusieurs jours : choisis tes dates une fois le calendrier publié." }
+   tip:"Les matchs de Liga se jouent souvent tard le soir : prévois le retour en métro ou en taxi." }
 ];
 
-function render() {
-  document.getElementById("grid").innerHTML = trips.map(t =>
-    '<article class="ticket"><div class="ph"><img src="images/' + t.slug + '.jpg" alt="Photo : ' + t.title + '" loading="lazy" onerror="this.remove()"><b>' + t.city + '</b></div>' +
-    '<div class="ticket-top"><span class="chip">' + t.tag + '</span><h3>' + t.title + '</h3><div class="meta">' + t.meta + '</div></div>' +
+function card(t) {
+  return '<article class="ticket"><div class="ph"><img src="images/' + t.slug + '.jpg" alt="Photo : ' + t.title + '" loading="lazy" onerror="this.remove()">' +
+    '<b>' + t.city + '</b>' + (t.credit ? '<span class="credit">' + t.credit + '</span>' : '') + '</div>' +
+    '<div class="ticket-top"><h3>' + t.title + '</h3><div class="meta">' + t.meta + '</div></div>' +
     '<div class="ticket-body"><ol>' + t.steps.map(s => "<li>" + s + "</li>").join("") + '</ol><p class="fact"><strong>Le saviez-vous ?</strong> ' + t.fact + '</p><p class="tip">' + t.tip + '</p></div>' +
     '<div class="perf"><a class="btn main" rel="sponsored noopener" target="_blank" href="' + BT.hotels(t.city) + '">Voir les hôtels</a>' +
     '<a class="btn" rel="sponsored noopener" target="_blank" href="' + BT.acts(t.acts) + '">Visites et activités</a>' +
-    '<a class="btn" rel="sponsored noopener" target="_blank" href="' + BT.train() + '">Trains et bus</a></div></article>'
-  ).join("");
+    '<a class="btn" rel="sponsored noopener" target="_blank" href="' + BT.train() + '">Trains et bus</a></div></article>';
+}
+
+function render() {
+  let html = "", nav = "";
+  continents.forEach(c => {
+    const inC = trips.filter(t => t.continent === c.id);
+    if (!inC.length) return;
+    html += '<h2 class="cont" id="' + c.id + '">' + c.name + '</h2>';
+    cats.forEach(k => {
+      const list = inC.filter(t => t.cat === k.id);
+      if (!list.length) return;
+      const id = c.id + "-" + k.id;
+      nav += '<a href="#' + id + '">' + k.name + '</a>';
+      html += '<h3 class="cat" id="' + id + '">' + k.name + '</h3><p class="catlead">' + k.intro + '</p><div class="grid">' + list.map(card).join("") + '</div>';
+    });
+  });
+  document.getElementById("content").innerHTML = html;
+  document.getElementById("catnav").innerHTML = nav;
 }
 document.addEventListener("bt-consent", render);
 render();
