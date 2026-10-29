@@ -23,6 +23,17 @@ a{color:inherit}
 .leg{flex:none;width:44px;border-top:3px dashed var(--pitch)}
 h2.section{font-size:clamp(32px,5vw,48px);margin:46px 0 8px}
 .lead{color:var(--muted);max-width:62ch;margin:0 0 26px}
+h2.cont{font-size:clamp(40px,6vw,64px);margin:56px 0 4px;border-bottom:3px solid var(--pitch);padding-bottom:6px}
+h3.cat{font-size:clamp(28px,4vw,38px);margin:36px 0 4px}
+.catlead{color:var(--muted);margin:0 0 18px;max-width:62ch}
+.catnav{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 6px}
+.catnav a{text-decoration:none;font-weight:600;font-size:15px;padding:8px 14px;border:2px solid var(--ink);border-radius:999px;background:var(--card)}
+.catnav a:hover{background:var(--ink);color:var(--paper)}
+.warn{border-left:4px solid #b3412f;background:var(--paper);padding:8px 12px;font-size:15px;margin:12px 0 0;border-radius:0 4px 4px 0}
+.dates{background:var(--paper);border-left:4px solid var(--pitch);padding:8px 12px;font-size:15px;margin:12px 0 0;border-radius:0 4px 4px 0}
+.src{font-size:13px;color:var(--muted);margin:12px 0 0}
+.src a{color:inherit}
+.credit{position:absolute;right:8px;bottom:6px;z-index:3;font-size:11px;color:#fff;background:rgba(0,0,0,.55);padding:1px 6px;border-radius:3px}
 .grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
 .ticket{background:var(--card);border:1px solid var(--line);border-radius:6px;display:flex;flex-direction:column;overflow:hidden}
 .ph{position:relative;aspect-ratio:16/9;background:repeating-linear-gradient(90deg,var(--pitch) 0 34px,var(--pitch2) 34px 68px);overflow:hidden}
