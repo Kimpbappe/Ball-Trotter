@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guide des billets – Ball-Trotter</title>
+<meta name="description" content="Comment se procurer des billets de match en Allemagne, Angleterre, Espagne, Italie, Serbie, Belgique et Écosse : étapes et pièges à éviter.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="disclosure">Les procédures de billetterie changent d’une saison à l’autre : confirme toujours sur le site officiel du club avant d’acheter.</div>
+
+<header class="hero"><div class="wrap">
+  <div class="top"><a class="brand" href="index.html">Ball-Trotter</a>
+    <nav class="nav" aria-label="Navigation"><a href="index.html">Itinéraires</a><a href="guide-billets.html" aria-current="page">Guide des billets</a></nav></div>
+  <h1>Décrocher sa place, pays par pays</h1>
+  <p>Chaque championnat a ses règles : membership, priorités, billets nominatifs. Voici les étapes à suivre et les pièges à éviter.</p>
+</div></header>
+
+<main class="wrap">
+  <h2 class="section">Les règles valables partout</h2>
+  <ol class="rules">
+    <li>Achète toujours sur la billetterie officielle du club, ou sur sa plateforme de revente officielle.</li>
+    <li>Attends la confirmation de la date et de l’heure du match : elles sont souvent fixées quelques semaines avant, pour la télévision.</li>
+    <li>Crée ton compte sur le site ou l’appli du club bien avant l’ouverture des ventes.</li>
+    <li>Repère les phases de vente : abonnés, membres, puis public. Les gros matchs sont souvent épuisés avant la vente générale.</li>
+    <li>Vérifie le nom sur le billet et prévois une pièce d’identité : beaucoup de billets sont nominatifs.</li>
+    <li>Méfie-toi des sites de revente non officiels, des vendeurs sur les réseaux sociaux et des prix très au-dessus de la valeur faciale.</li>
+  </ol>
+
+  <h2 class="section">Par pays</h2>
+  <div id="guide"></div>
+</main>
+
+<footer id="site-footer"></footer>
+<script src="site.js"></script>
+<script>
+const countries = [
+ { name:"Allemagne", small:"Bundesliga · Dortmund, Cologne, Gelsenkirchen, Hambourg, Berlin",
+   steps:["Consulte le calendrier du club et attends les horaires définitifs.","Crée un compte sur la billetterie officielle du club, souvent via le site ou l’appli.","Repère l’ouverture de la vente aux membres et la vente générale : les abonnés passent avant.","Pour les matchs à forte demande (Dortmund, derbys), prévois plusieurs tentatives, voire un tirage au sort ou une file d’attente en ligne.","Les billets sont généralement liés à un compte ou à un nom : garde-les dans l’appli et prévois une pièce d’identité.","Si c’est complet : cherche la revente officielle du club ou les formules d’hospitalité."] },
+ { name:"Angleterre", small:"Premier League et divisions inférieures · Millwall, West Ham",
+   steps:["Consulte la date confirmée du match sur le site du club.","Crée un compte et vérifie si une adhésion (gratuite ou payante) est demandée : c’est fréquent.","Les clubs attribuent souvent des priorités selon l’historique de présence : abonnés et membres passent avant.","Pour les gros matchs, une phase de tirage ou de priorité peut précéder la vente générale.","Les billets sont de plus en plus numériques (appli ou carte) : prépare-les à l’avance.","Utilise uniquement l’échange officiel du club pour revendre ou acheter d’occasion.","En dernier recours, regarde les formules hospitalité, plus chères mais plus accessibles."] },
+ { name:"Espagne", small:"LaLiga · Real Madrid, Atlético de Madrid",
+   steps:["Attends la date de match confirmée : en Liga, les horaires sont fixés tard.","Achète sur le site ou l’appli officiels du club.","Repère la phase réservée aux membres (socios) avant la vente au public.","Choisis ta tribune : certaines zones sont plus calmes pour un premier match.","Garde le billet nominatif ou numérique dans l’appli et prends ta pièce d’identité.","Passe par la plateforme de revente officielle, si elle existe, plutôt que par un revendeur."] },
+ { name:"Italie", small:"Serie A · Milan, Inter, Juventus",
+   steps:["Attends la date et l’horaire officiels : la Serie A étale ses matchs sur plusieurs jours.","Achète via la billetterie officielle du club ou sa plateforme partenaire.","Prévois un billet nominatif : le nom et une pièce d’identité sont demandés à l’achat et souvent à l’entrée.","Choisis ton secteur avec soin : les « curve » sont réservées aux supporters les plus fervents, les tribunes sont plus calmes.","Pour San Siro, vérifie si le match est celui du Milan ou de l’Inter pour acheter auprès du bon club."] },
+ { name:"Serbie", small:"Super Liga · Étoile Rouge, Partizan",
+   steps:["Confirme la date du derby auprès du club : le calendrier peut changer vite.","Regarde le site officiel du club et ses canaux de communication pour les points de vente.","Pour l’Éternel derby, les places sont rares et réservées en priorité aux supporters : n’attends pas la dernière minute.","Si tu ne trouves rien, contacte directement le club par e-mail ou via ses réseaux.","Renseigne-toi sur les consignes de sécurité avant de partir."] },
+ { name:"Belgique", small:"Pro League · Union Saint-Gilloise, Anvers, Gand",
+   steps:["Consulte le calendrier officiel de la Pro League et celui du club.","Crée un compte sur la billetterie du club.","Les abonnés et membres bénéficient en général d’un accès prioritaire, notamment pour les clubs en forte demande comme l’Union Saint-Gilloise.","Prévois de réserver tôt : les stades sont petits et se remplissent vite.","Garde ton billet dans l’appli et une pièce d’identité à portée de main."] },
+ { name:"Écosse", small:"Scottish Premiership · Dundee, Dundee United",
+   steps:["Vérifie les clubs en présence : le derby n’a lieu que si les deux sont dans la même division.","Consulte le site officiel de chaque club pour la billetterie.","Les ventes s’ouvrent d’abord aux abonnés, puis au public.","Les billets sont généralement disponibles en ligne ou au guichet du stade.","Sur place, arrive tôt : les entrées peuvent être étroites dans les vieux stades."] }
+];
+document.getElementById("guide").innerHTML = countries.map(c =>
+  '<details><summary>' + c.name + '<small>' + c.small + '</small></summary><div class="in"><ol>' + c.steps.map(s => "<li>" + s + "</li>").join("") + '</ol></div></details>'
+).join("");
+</script>
+</body>
+</html>
