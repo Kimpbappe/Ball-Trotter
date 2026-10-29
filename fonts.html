@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Choisir la police – Ball-Trotter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@800&family=DM+Sans:wght@400;500;600&family=Anton&family=Source+Serif+4:wght@400;600&family=Bebas+Neue&family=Barlow:wght@400;500;600&family=Oswald:wght@600&family=Nunito+Sans:wght@400;600&family=Alfa+Slab+One&family=Libre+Franklin:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="top"><a class="brand" href="index.html"><img src="logo.svg" alt="" width="46" height="46"><span>Ball-Trotter</span></a></div>
+  <div class="hero-grid"><div><h1 style="font-size:calc(var(--fs-h2)*var(--dscale))">Choisis ta police</h1>
+  <p class="sub">Cinq associations de polices appliquées à la même page. Chaque option associe une police de titres, en majuscules, et une police de texte courant. Dis-moi simplement le numéro que tu préfères.</p></div></div>
+</div></header>
+<main class="wrap" id="tests"></main>
+<script>
+const opts=[
+ ["f1","Option 1 : Big Shoulders Display et DM Sans","Inspirée de la signalétique des stades américains : étroite, puissante, très lisible. Le texte courant est sans empattement et moderne. C’est l’option actuellement en place."],
+ ["f2","Option 2 : Anton et Source Serif 4","Titres massifs façon une de journal sportif, texte courant avec empattements pour un ton éditorial et posé."],
+ ["f3","Option 3 : Bebas Neue et Barlow","Le classique des affiches de match : sobre, familier, très net. C’était la famille Barlow du site précédent."],
+ ["f4","Option 4 : Oswald et Nunito Sans","Titres un peu plus souples, texte courant arrondi et chaleureux. Le ton le plus accessible."],
+ ["f5","Option 5 : Alfa Slab One et Libre Franklin","Titres à empattements épais façon billet rétro ou écusson : le plus de caractère, le plus décalé."]
+];
+document.getElementById("tests").innerHTML=opts.map(o=>`
+<section class="fonttest ${o[0]}">
+  <span class="label">${o[1]}</span>
+  <p style="max-width:64ch;color:var(--muted)">${o[2]}</p>
+  <div class="row">
+    <div>
+      <h1>Voir du foot dans le monde</h1>
+      <h2 style="margin-top:18px">Derbys bouillants</h2>
+      <h3 style="margin-top:14px">Clubs et chocs mythiques</h3>
+      <h4 style="margin-top:14px">Un sous-titre en texte courant</h4>
+      <p class="lead" style="margin-top:6px">Un paragraphe d’introduction : où dormir, comment se déplacer et comment décrocher ta place.</p>
+      <p>Le texte courant sert aux étapes, aux conseils et aux explications. Il doit rester agréable à lire sur téléphone comme sur ordinateur, même sur de longs paragraphes.</p>
+    </div>
+    <article class="ticket">
+      <div class="ticket-top"><h3>L’Éternel derby de Belgrade</h3><div class="meta">3 jours · Serbie · Partizan – Étoile Rouge</div></div>
+      <div class="ticket-body">
+        <ol><li>Stade Rajko Mitić, dit « Marakana » : le stade de l’Étoile Rouge.</li><li>Stade du Partizan : tout proche, à moins d’un kilomètre.</li></ol>
+        <p class="fact"><strong>Le saviez-vous ?</strong> L’Étoile Rouge a remporté la Coupe d’Europe des clubs champions en 1991.</p>
+        <p class="dates"><strong>Calendrier 2026-27 :</strong> le match retour se joue au stade du Partizan.</p>
+        <p class="warn"><strong>Avant de partir :</strong> passeport valide ou carte d’identité, sans visa pour moins de 90 jours.</p>
+      </div>
+      <div class="perf"><a class="btn main" href="#">Voir les hôtels</a><a class="btn" href="#">Visites et activités</a></div>
+    </article>
+  </div>
+</section>`).join("");
+</script>
+</body>
+</html>
