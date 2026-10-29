@@ -374,7 +374,7 @@
       '<div class="res-side"><div class="res-total"><b>≈ ' + eur(o.mid) + '</b><small>par personne</small><small>entre ' + eur(o.lo) + " et " + eur(o.hi) + "</small></div>" + badge +
       '<a class="btn main" rel="sponsored noopener" target="_blank" href="' + hotelUrl + '">' + (m ? "Hôtels pour ces dates" : "Voir les hôtels") + "</a>" +
       '<a class="btn" rel="sponsored noopener" target="_blank" href="' + BT.train() + '">Trains, bus et vols</a>' +
-      '<a class="btn" href="#trip-' + p.id + '">Voir le parcours</a></div></article>';
+      '<a class="btn" href="' + p.id + '.html">Voir le parcours</a></div></article>';
   }
 
   function renderResults() {
@@ -443,6 +443,14 @@
     $("pl-results").innerHTML = '<div class="res-empty"><p>Le calendrier de la saison 2026-27 est terminé. Les dates de la saison suivante seront ajoutées dès la publication des calendriers officiels.</p></div>';
     return;
   }
+  /* arrivée depuis une page de parcours : index.html?du=AAAA-MM-JJ&au=AAAA-MM-JJ#planificateur */
+  try {
+    var q = new URLSearchParams(location.search), du = q.get("du"), au = q.get("au"), iso = /^\d{4}-\d{2}-\d{2}$/;
+    if (du && iso.test(du)) {
+      var qa = Math.max(toN(du), TODAY), qb = au && iso.test(au) ? toN(au) : qa;
+      if (qa <= END && qb >= qa) { S.a = qa; S.b = Math.min(qb, END); S.view = monthIdx(qa); S.focus = qa; }
+    }
+  } catch (e) {}
   setIdx(S.bi);
   renderAll();
   document.addEventListener("bt-consent", scheduleResults);

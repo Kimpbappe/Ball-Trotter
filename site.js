@@ -26,11 +26,20 @@ const AFF = {
     train: () => ok() ? AFF.transport : "https://www.omio.fr/"
   };
 
+  // Le pied de page est écrit dans chaque page par build.js ; ceci ne sert que si une page n’en a pas.
   const foot = document.getElementById("site-footer");
-  if (foot) foot.innerHTML =
+  if (foot && !foot.firstElementChild) foot.innerHTML =
     '<div class="wrap"><p><strong>Ball-Trotter</strong> : site indépendant, non affilié aux clubs, ligues ou stades cités.</p>' +
-    '<div class="links"><a href="index.html#mentions">Mentions légales</a><a href="index.html#confidentialite">Confidentialité et cookies</a>' +
+    '<div class="links"><a href="mentions-legales.html">Mentions légales</a><a href="confidentialite.html">Confidentialité et cookies</a>' +
     '<button type="button" id="manage">Gérer mes cookies</button></div></div>';
+
+  // Boutons partenaires écrits en dur dans les pages : on leur ajoute l’identifiant si le visiteur a accepté.
+  function applyAff() {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-aff]"), function (a) {
+      const k = a.getAttribute("data-aff"), q = a.getAttribute("data-q") || "";
+      a.href = k === "hotels" ? window.BT.hotels(q) : k === "acts" ? window.BT.acts(q) : window.BT.train();
+    });
+  }
 
   const bar = document.createElement("div");
   bar.id = "cookies"; bar.hidden = true;
@@ -43,6 +52,7 @@ const AFF = {
     consent = v;
     try { localStorage.setItem("bt-consent", v); } catch (e) {}
     bar.hidden = true;
+    applyAff();
     document.dispatchEvent(new Event("bt-consent"));
   }
   document.getElementById("yes").onclick = () => choose("yes");
@@ -50,4 +60,5 @@ const AFF = {
   const m = document.getElementById("manage");
   if (m) m.onclick = () => { bar.hidden = false; };
   if (consent !== "yes" && consent !== "no") bar.hidden = false;
+  applyAff();
 })();
